@@ -23,6 +23,11 @@
 	  }
 	  return x;
       }
+      function customAdjusts () {
+	  if (document.getElementById('set').value === 'custom' && document.getElementById('pg-adjust') == null) {
+	      document.getElementById('inputs').insertAdjacentHTML('beforeend', '<input id="pg-adjust" placeholder="Powers Adjustment"> <input id="ppb-adjust" placeholder="PPB Adjustment">');
+	  }
+      }
       function compute () {
 	  var sets = {
               'is-186': [0, 0],
@@ -37,7 +42,8 @@
               'wait': [-0.230, -0.11],
               'eft': [0.656, 7.59],
               'pb': [0.936, 9.81],
-              'none': [0, 0]
+              'none': [0, 0],
+	      'custom': [0, 0]
 	  }
 	  var outputs = document.getElementById('outputs');
 	  while (outputs.hasChildNodes()) {
@@ -49,8 +55,16 @@
 	      var ppb = Number(document.getElementById('ppb').value);
 	      var ng = Number(document.getElementById('negs').value)/g;
 	      var set = document.getElementById('set').value;
-	      var apg = Math.pow(Math.cbrt(pg) + sets[set][0], 3);
-	      var appb = ppb + sets[set][1];
+	      var pga, ppba;
+	      if (set === 'custom') {
+		  pga = Number(document.getElementById('pg-adjust').value);
+		  ppba = Number(document.getElementById('ppb-adjust').value);
+	      } else {
+		  pga = sets[set][0];
+		  ppba = sets[set][1];
+	      }
+	      var apg = Math.pow(Math.cbrt(pg) + pga, 3);
+	      var appb = ppb + ppba;
 	      var score = 3.125*(apg + appb) - ng;
 	      if (score != score) {
 		  throw new Error('score is NaN');
@@ -69,7 +83,7 @@
   <body>
     <h1>Groger Score Calculator</h1>
     <div id="inputs">
-      <input id="powers" placeholder="Total Powers"> <input id="ppb" placeholder="PPB"> <input id="negs" placeholder="Total Negs"> <input id="games" placeholder="Games Played"> <select id="set">
+      <input id="powers" placeholder="Total Powers"> <input id="ppb" placeholder="PPB"> <input id="negs" placeholder="Total Negs"> <input id="games" placeholder="Games Played"> <select id="set" onchange="customAdjusts()">
 	<option value="set">Choose a Set</option>
 	<option value="is-186">IS-186</option>
 	<option value="is-188">IS-188</option>
@@ -84,6 +98,7 @@
 	<option value="eft">EFT</option>
 	<option value="pb">Penn Bowl</option>
 	<option value="none">Unadjusted</option>
+	<option value="custom">Custom...</option>
       </select> <button id="compute" onclick="compute()">Compute Score</button>
     </div>
     <br>

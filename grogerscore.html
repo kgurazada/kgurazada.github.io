@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Groger Score Calculator</title>
+    <style>
+      * {
+	  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      }
+      button {
+	  border: 1px solid #aaa;
+	  border-radius: 4px;
+      }
+      button:hover {
+	  background-color: #007bff;
+      }
+    </style>
+    <script>
+      function round (x) {
+	  x = String(x);
+	  if (x.indexOf('.') !== -1) {
+	      split = x.split('.');
+              roundedDecimal = split[1].substring(0, 2);
+              x = split[0] + '.' + roundedDecimal;
+	  }
+	  return x;
+      }
+      function compute () {
+	  var sets = {
+              'is-186': [0, 0],
+              'is-188': [-0.15, -0.05],
+              'ssnct': [0.058, 0.1],
+              'blast': [0.188, 3.7],
+              'hft': [0.063, 1.62],
+              'logic': [-0.018, 0.56],
+              'shit': [0.518, 4.08],
+              'raft': [-0.041, 0.91],
+              'scottie': [0.124, 0.67],
+              'wait': [-0.230, -0.11],
+              'eft': [0.656, 7.59],
+              'pb': [0.936, 9.81],
+              'none': [0, 0]
+	  }
+	  var outputs = document.getElementById('outputs');
+	  while (outputs.hasChildNodes()) {
+	      outputs.removeChild(outputs.lastChild);
+	  }
+	  try {
+	      var g = Number(document.getElementById('games').value);
+	      var pg = Number(document.getElementById('powers').value)/g;
+	      var ppb = Number(document.getElementById('ppb').value);
+	      var ng = Number(document.getElementById('negs').value)/g;
+	      var set = document.getElementById('set').value;
+	      var apg = Math.pow(Math.cbrt(pg) + sets[set][0], 3);
+	      var appb = ppb + sets[set][1];
+	      var score = 3.125*(apg + appb) - ng;
+	      if (score != score) {
+		  throw new Error('score is NaN');
+	      }
+	      outputs.innerHTML = '<p>Your adjusted powers per game [aP/G] is <strong>' + round(apg) + '</strong></p>\n' + 
+		  '<p>Your adjusted points per bonus [aPPB] is <strong>' + round(appb) + '</strong></p>\n' +
+		  '<p>Your overall Groger Score is <strong>not good enough</strong></p>\n' + 
+		  '<p>lmao jk it\'s ' + round(score) + '</p>';
+	  } catch (e) {
+	      console.error(e);
+	      outputs.innerHTML = '<p>Something seems to have broken; did you forget an input?</p>'
+	  }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Groger Score Calculator</h1>
+    <div id="inputs">
+      <input id="powers" placeholder="Total Powers"> <input id="ppb" placeholder="PPB"> <input id="negs" placeholder="Total Negs"> <input id="games" placeholder="Games Played"> <select id="set">
+	<option value="set">Choose a Set</option>
+	<option value="is-186">IS-186</option>
+	<option value="is-188">IS-188</option>
+	<option value="ssnct">2019 SSNCT</option>
+	<option value="blast">BLAST</option>
+	<option value="hft">HFT</option>
+	<option value="logic">LOGIC</option>
+	<option value="shit">Prison Bowl XII</option>
+	<option value="raft">RAFT</option>
+	<option value="scottie">Scottie</option>
+	<option value="wait">WAIT</option>
+	<option value="eft">EFT</option>
+	<option value="pb">Penn Bowl</option>
+	<option value="none">Unadjusted</option>
+      </select> <button id="compute" onclick="compute()">Compute Score</button>
+    </div>
+    <br>
+    <div id="outputs"></div>
+  </body>
+</html>

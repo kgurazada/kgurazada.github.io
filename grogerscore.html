@@ -72,8 +72,9 @@
 	      }
 	      outputs.innerHTML = '<p>Your adjusted powers per game [aP/G] is <strong>' + round(apg) + '</strong></p>\n' + 
 		  '<p>Your adjusted points per bonus [aPPB] is <strong>' + round(appb) + '</strong></p>\n' +
-		  '<p>Your overall Groger Score is <strong>not good enough</strong></p>\n' + 
-		  '<p>lmao jk it\'s ' + round(score) + '</p>';
+		  // '<p>Your overall Groger Score is <strong>not good enough</strong></p>\n' + 
+		  // '<p>lmao jk it\'s ' + round(score) + '</p>'
+		  + '<p>Your overall Groger Score is <strong>' + round(score) + '</strong>.</p>';
 	  } catch (e) {
 	      console.error(e);
 	      outputs.innerHTML = '<p>Something seems to have broken; did you forget an input?</p>'

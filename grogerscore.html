@@ -32,22 +32,25 @@
       function compute () {
 	  var sets = {
               'is-186': [0, 0],
-              'is-188': [-0.141, -0.65],
-	      'is-190': [-0.126, -0.02],
-	      'is-192': [-0.005, -0.69],
-              'ssnct': [0.025, 0.32],
-	      'raft': [-0.027, 0.11],
-	      'shit': [0.508, 3.98],
-	      'scottie': [0.116, 0.11],
-	      'logic': [-0.030, -0.59],
-	      'blast': [0.176, 3.38],
-	      'wait': [-0.125, 0.23],
-	      'hft': [0.063, 1.23],
-	      'calisto': [0.001, 0.07],
-	      'bhsat': [0.120, 0.49],
+              'is-188': [-0.140, -0.61],
+	      'is-190': [-0.122, 0.05],
+	      'is-192': [-0.030, -0.44],
+              'ssnct': [0.045, 0.28],
+	      'sct': [0.238, 0],
+	      'raft': [-0.022, 0.16],
+	      'shit': [0.483, 4.04],
+	      'scottie': [0.125, 0.18],
+	      'logic': [-0.039, -0.64],
+	      'blast': [0.185, 3.24],
+	      'wait': [-0.118, 0.33],
+	      'hft': [0.074, 1.13],
+	      'calisto': [0.007, 0.16],
+	      'bhsat': [0.031, 0.02],
+	      'jbb': [0.102, 2.25],
 	      'eft': [0.709, 7.68],
 	      'pb': [0.907, 9.58],
 	      'mwt': [0.635, 7.31],
+	      'fall': [0, 4.12],
               'none': [0, 0],
 	      'custom': [0, 0]
 	  }
@@ -75,8 +78,8 @@
 	      if (score != score) {
 		  throw new Error('score is NaN');
 	      }
-	      outputs.innerHTML = '<p>Your adjusted powers per game [aP/G] is <strong>' + round(apg) + '</strong></p>\n' + 
-		  '<p>Your adjusted points per bonus [aPPB] is <strong>' + round(appb) + '</strong></p>\n' +
+	      outputs.innerHTML = '<p>Your adjusted powers per game [aP/G] is <strong>' + round(apg) + '</strong>;</p>\n' + 
+		  '<p>Your adjusted points per bonus [aPPB] is <strong>' + round(appb) + '</strong>;</p>\n' +
 		  // '<p>Your overall Groger Score is <strong>not good enough</strong></p>\n' + 
 		  // '<p>lmao jk it\'s ' + round(score) + '</p>'
 		  '<p>Your overall Groger Score is <strong>' + round(score) + '</strong>.</p>';
@@ -89,7 +92,7 @@
   </head>
   <body>
     <h1>Groger Score Calculator</h1>
-    <p>These adjustments were last updated on February 26th, 2020 at 10:00am PT.</p>
+    <p>These adjustments were last updated on March 2nd, 2020 at 10:00am PT.</p>
     <div id="inputs">
       <input id="powers" placeholder="Total Powers"> <input id="ppb" placeholder="PPB"> <input id="negs" placeholder="Total Negs"> <input id="games" placeholder="Games Played"> <select id="set" onchange="customAdjusts()">
 	<option value="set">Choose a Set</option>
@@ -98,6 +101,7 @@
 	<option value="is-190">IS-190</option>
 	<option value="is-192">IS-192</option>
 	<option value="ssnct">SSNCT-19</option>
+	<option value="sct">SCT-20DII</option>
 	<option value="raft">RAFT</option>
 	<option value="shit">Prison Bowl XII</option>
 	<option value="scottie">Scottie</option>
@@ -107,6 +111,7 @@
 	<option value="hft">HFT</option>
 	<option value="calisto">CALISTO</option>
 	<option value="bhsat">BHSAT</option>
+	<option value="jbb">JBB</option>
 	<option value="eft">EFT</option>
 	<option value="pb">Penn Bowl</option>
 	<option value="mwt">MWT</option>
